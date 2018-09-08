@@ -1,4 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14270.11" systemVersion="17E199" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="NewGame" representedClassName="NewGame" syncable="YES" codeGenerationType="class">
+        <attribute name="compltedPlayerIDs" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gameID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gameStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gameTotal" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isCompleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="playersObj" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="runnigPlayerIDs" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="scoreBoard" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="winnerID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="player" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Players" inverseName="newGame" inverseEntity="Players" syncable="YES"/>
+    </entity>
+    <entity name="Players" representedClassName="Players" syncable="YES" codeGenerationType="class">
+        <attribute name="avatar" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="yearOfBirth" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="newGame" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NewGame" inverseName="player" inverseEntity="NewGame" syncable="YES"/>
+    </entity>
+    <entity name="Settings" representedClassName="Settings" syncable="YES" codeGenerationType="class">
+        <attribute name="settingsData" optional="YES" attributeType="Transformable" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="NewGame" positionX="141.7265625" positionY="-25.84765625" width="128" height="195"/>
+        <element name="Players" positionX="-57.51953125" positionY="-51.08203125" width="128" height="135"/>
+        <element name="Settings" positionX="-78.13671875" positionY="-215.0703125" width="128" height="60"/>
+    </elements>
 </model>
