@@ -7,12 +7,12 @@
 //
 
 import UIKit
-
-class SideMenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
+import MessageUI
+class SideMenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,MFMailComposeViewControllerDelegate{
 
     @IBOutlet weak var tblMenu: UITableView!
-    let menuTitles = ["Home","Continue Games","Completed Games","Settings"]
-    let menuImages = [#imageLiteral(resourceName: "home"),#imageLiteral(resourceName: "continue"),#imageLiteral(resourceName: "completed"),#imageLiteral(resourceName: "settings")]
+    let menuTitles = ["Home","Continue Games","Completed Games","Send Feedback","Settings"]
+    let menuImages = [#imageLiteral(resourceName: "home"),#imageLiteral(resourceName: "continue"),#imageLiteral(resourceName: "completed"),#imageLiteral(resourceName: "Feedback"),#imageLiteral(resourceName: "settings")]
   
     
     override func viewDidLoad() {
@@ -37,7 +37,6 @@ class SideMenuViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         menuCell.textLabel?.text = menuTitles[indexPath.row]
         menuCell.textLabel?.textColor = UIColor.white
-        
         menuCell.imageView?.image = menuImages[indexPath.row]
       
         return menuCell
@@ -65,6 +64,10 @@ class SideMenuViewController: UIViewController,UITableViewDelegate,UITableViewDa
             let _ = kConstantObj.SetIntialMainViewController("CompletedGamesViewController")
             break
         case 3:
+            print("Send feedback")
+            self.sendFeedback()
+            break
+        case 4:
             let _ = kConstantObj.SetIntialMainViewController("SettingsViewController")
             break
         default:
@@ -75,7 +78,52 @@ class SideMenuViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
     }
-
+    
+    func sendFeedback() -> Void
+    {
+        
+        let mailComposeVC = configureMailComposeVC()
+        
+        if MFMailComposeViewController.canSendMail()
+        {
+            self.present(mailComposeVC, animated: true, completion: nil)
+        }
+        else
+        {
+            self.showSendMailErrorAlert()
+        }
+        
+    }
+    
+    func configureMailComposeVC() -> MFMailComposeViewController
+    {
+        let mailComposeVC = MFMailComposeViewController()
+        mailComposeVC.mailComposeDelegate = self
+        mailComposeVC.setToRecipients(["mgiosdev18@gmail.com"])
+        mailComposeVC.setSubject("Feedback")
+        return mailComposeVC
+    }
+    
+    func showSendMailErrorAlert() {
+     
+        let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
+        popOverVC.modalPresentationStyle = .popover
+        popOverVC.showOnlySingleButton  = true
+        popOverVC.strMessage = "Your device could not send email.  Please check email configuration and try again."
+        //  popOverVC.delegate = self
+        popOverVC.onOKClicked = {(onOKCLicked) ->() in
+            
+            popOverVC.dismissAlertPop()
+        }
+        self.present(popOverVC, animated: true, completion: nil)
+        
+    }
+    // MARK: MFMailComposeViewControllerDelegate
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
