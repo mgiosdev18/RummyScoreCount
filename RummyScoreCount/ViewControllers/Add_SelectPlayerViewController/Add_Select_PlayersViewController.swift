@@ -41,6 +41,8 @@ class Add_Select_PlayersViewController: UIViewController,UICollectionViewDelegat
     var arrcardsCount = [0,0,0,0,0,0,0,0,0,0,0,0,0]
     var arrPlayerScores = Array<classPlayersDict>()
     
+    weak var observer : NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,6 +50,13 @@ class Add_Select_PlayersViewController: UIViewController,UICollectionViewDelegat
         
         CommonObjectClass().EnableButtons(buttons: [btnStartNewGame], withBackgroundColor: .getCustomBlueColor())
         playerCollectionView.backgroundColor = .clear
+        
+        observer = NotificationCenter.default.addObserver(forName: .refreshView, object: nil, queue: OperationQueue.main, using: { (notificaiton) in
+            print("iPad observer clicked")
+            self.arrSelectedPlayerIDs.removeAll()
+            self.getAllPlayers()
+            
+        })
  
         
     }
@@ -102,7 +111,10 @@ class Add_Select_PlayersViewController: UIViewController,UICollectionViewDelegat
         {
             
             let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-            popOverVC.modalPresentationStyle = .popover
+            if UIDevice.current.userInterfaceIdiom != .pad
+            {
+                popOverVC.modalPresentationStyle = .popover
+            }
             popOverVC.showOnlySingleButton  = true
             popOverVC.strMessage = "You can add maximum of \(MaxPlayers) players only"
           //  popOverVC.delegate = self
@@ -128,7 +140,10 @@ class Add_Select_PlayersViewController: UIViewController,UICollectionViewDelegat
         {
             
             let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-            popOverVC.modalPresentationStyle = .popover
+            if UIDevice.current.userInterfaceIdiom != .pad
+            {
+                popOverVC.modalPresentationStyle = .popover
+            }
             popOverVC.showOnlySingleButton = false
             popOverVC.strMessage = "Once game started you cannot come back. But you can 'End This Game' to play later.\nDo you want to start the game with selected players?"
             popOverVC.onNOClicked = {(noClickedStr) ->() in
@@ -151,7 +166,12 @@ class Add_Select_PlayersViewController: UIViewController,UICollectionViewDelegat
         else
         {
             let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-            popOverVC.modalPresentationStyle = .popover
+            
+            if UIDevice.current.userInterfaceIdiom != .pad
+            {
+                popOverVC.modalPresentationStyle = .popover
+            }
+          
             popOverVC.showOnlySingleButton  = true
             popOverVC.strMessage = "Please select atleast 2 players to start the game"
            // popOverVC.delegate = self
@@ -164,6 +184,7 @@ class Add_Select_PlayersViewController: UIViewController,UICollectionViewDelegat
         }
  
     }
+
     
     //MARK: - UICollection View delegates
     //MARK: -
@@ -305,7 +326,10 @@ class Add_Select_PlayersViewController: UIViewController,UICollectionViewDelegat
       
         
         let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-        popOverVC.modalPresentationStyle = .popover
+        if UIDevice.current.userInterfaceIdiom != .pad
+        {
+            popOverVC.modalPresentationStyle = .popover
+        }
         popOverVC.showOnlySingleButton = false
         popOverVC.strMessage = "This Player will delete from all games which are completed and continued games.Do you want to delete this player?"
         popOverVC.onNOClicked = {(noClickedStr) ->() in

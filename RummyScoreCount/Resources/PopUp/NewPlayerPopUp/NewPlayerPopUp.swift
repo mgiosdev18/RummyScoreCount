@@ -162,7 +162,10 @@ class NewPlayerPopUp: UIViewController,UINavigationControllerDelegate,UIImagePic
             else
             {
                 let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-                popOverVC.modalPresentationStyle = .popover
+                if UIDevice.current.userInterfaceIdiom != .pad
+                {
+                    popOverVC.modalPresentationStyle = .popover
+                }
                 popOverVC.showOnlySingleButton  = true
                 popOverVC.strMessage = "Camera not available in your device"
                // popOverVC.delegate = self
@@ -214,6 +217,7 @@ class NewPlayerPopUp: UIViewController,UINavigationControllerDelegate,UIImagePic
     @IBAction func btnCancelClicked(_ sender: UIButton)
     {
         //CommonObjectClass().removeAnimate(FromVC: self)
+    
         
         self.dismiss(animated: true, completion: nil)
     }
@@ -246,8 +250,18 @@ class NewPlayerPopUp: UIViewController,UINavigationControllerDelegate,UIImagePic
                 do {
                     try managedContext.save()
                     
+                    if UIDevice.current.userInterfaceIdiom == .pad
+                    {
+                        NotificationCenter.default.removeObserver(self, name: .refreshView, object: nil)
+                        NotificationCenter.default.post(name: .refreshView, object: self)
+                        
+                    }
+                    
                     let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-                    popOverVC.modalPresentationStyle = .popover
+                    if UIDevice.current.userInterfaceIdiom != .pad
+                    {
+                        popOverVC.modalPresentationStyle = .popover
+                    }
                     popOverVC.showOnlySingleButton  = true
                     popOverVC.strMessage = "Player updated successfully."
                     // popOverVC.delegate = self
@@ -283,11 +297,21 @@ class NewPlayerPopUp: UIViewController,UINavigationControllerDelegate,UIImagePic
                 do {
                     try managedContext.save()
                     
+                    if UIDevice.current.userInterfaceIdiom == .pad
+                    {
+                        NotificationCenter.default.removeObserver(self, name: .refreshView, object: nil)
+                        NotificationCenter.default.post(name: .refreshView, object: self)
+                        
+                    }
+                    
                     if self.GetPlayersCount() == MaxPlayers
                     {
                         
                         let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-                        popOverVC.modalPresentationStyle = .popover
+                        if UIDevice.current.userInterfaceIdiom != .pad
+                        {
+                            popOverVC.modalPresentationStyle = .popover
+                        }
                         popOverVC.showOnlySingleButton  = true
                         popOverVC.strMessage = "Player added successfully.\nYou have added maximum of \(MaxPlayers) players"
                         // popOverVC.delegate = self
@@ -451,7 +475,10 @@ class NewPlayerPopUp: UIViewController,UINavigationControllerDelegate,UIImagePic
     {
         
             let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
+        if UIDevice.current.userInterfaceIdiom != .pad
+        {
             popOverVC.modalPresentationStyle = .popover
+        }
             popOverVC.showOnlySingleButton = false
             popOverVC.strMessage = "Player added successfully.\nDo you want to add another player?"
             popOverVC.onNOClicked = {(noClickedStr) ->() in

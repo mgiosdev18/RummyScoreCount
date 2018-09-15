@@ -519,7 +519,10 @@ class NewGameViewController: UIViewController,UICollectionViewDataSource,UIColle
     {
         
          let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-         popOverVC.modalPresentationStyle = .popover
+        if UIDevice.current.userInterfaceIdiom != .pad
+        {
+            popOverVC.modalPresentationStyle = .popover
+        }
          popOverVC.showOnlySingleButton = false
         popOverVC.strMessage = """
         This will exits from this game only if not completed.and you can continue this game in later.
@@ -545,7 +548,10 @@ class NewGameViewController: UIViewController,UICollectionViewDataSource,UIColle
     @IBAction func btnAddPlayerClicked(_ sender: UIButton)
     {
         let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-        popOverVC.modalPresentationStyle = .popover
+        if UIDevice.current.userInterfaceIdiom != .pad
+        {
+            popOverVC.modalPresentationStyle = .popover
+        }
         popOverVC.showOnlySingleButton  = true
         popOverVC.strMessage = "Will coming soon in next version"
         // popOverVC.delegate = self
@@ -761,7 +767,10 @@ class NewGameViewController: UIViewController,UICollectionViewDataSource,UIColle
             if getPlayerScoreDict.count == 0
             {
                 let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-                popOverVC.modalPresentationStyle = .popover
+                if UIDevice.current.userInterfaceIdiom != .pad
+                {
+                    popOverVC.modalPresentationStyle = .popover
+                }
                 popOverVC.showOnlySingleButton  = true
                 popOverVC.strMessage = "Congrats! You have got deal show"
                 // popOverVC.delegate = self
@@ -793,7 +802,10 @@ class NewGameViewController: UIViewController,UICollectionViewDataSource,UIColle
     {
         /*
         let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-        popOverVC.modalPresentationStyle = .popover
+         if UIDevice.current.userInterfaceIdiom != .pad
+         {
+         popOverVC.modalPresentationStyle = .popover
+         }
         popOverVC.showOnlySingleButton = false
        // popOverVC.strMessage = "Do you want to rejoin to this game? Your score will be one point more than highest score among the players."
         popOverVC.strMessage = "Will coming soon in next version"
@@ -811,7 +823,10 @@ class NewGameViewController: UIViewController,UICollectionViewDataSource,UIColle
         
         
         let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-        popOverVC.modalPresentationStyle = .popover
+        if UIDevice.current.userInterfaceIdiom != .pad
+        {
+            popOverVC.modalPresentationStyle = .popover
+        }
         popOverVC.showOnlySingleButton  = true
         popOverVC.strMessage = "Will coming soon in next version"
        // popOverVC.delegate = self

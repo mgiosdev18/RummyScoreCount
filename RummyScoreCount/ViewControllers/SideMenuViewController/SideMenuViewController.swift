@@ -107,7 +107,10 @@ class SideMenuViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func showSendMailErrorAlert() {
      
         let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-        popOverVC.modalPresentationStyle = .popover
+        if UIDevice.current.userInterfaceIdiom != .pad
+        {
+            popOverVC.modalPresentationStyle = .popover
+        }
         popOverVC.showOnlySingleButton  = true
         popOverVC.strMessage = "Your device could not send email.  Please check email configuration and try again."
         //  popOverVC.delegate = self

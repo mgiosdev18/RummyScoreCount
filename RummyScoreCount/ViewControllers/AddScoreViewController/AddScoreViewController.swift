@@ -111,7 +111,10 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
         {
             
             let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-            popOverVC.modalPresentationStyle = .popover
+            if UIDevice.current.userInterfaceIdiom != .pad
+            {
+                popOverVC.modalPresentationStyle = .popover
+            }
             popOverVC.showOnlySingleButton = false
             popOverVC.strMessage = "Are you confirm that you are not played yet for this round. If so your score will be half of your total count for this round"
             popOverVC.onNOClicked = {(noClickedStr) ->() in
@@ -348,7 +351,7 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
         }
         else
         {
-            if totalCardCount < Int(gameTotal)!
+            if totalCardCount < Int(strFullCount)
             {
                 self.btnCheckBox.isEnabled = true
                 self.lblHalfCount.textColor = UIColor.white
@@ -367,7 +370,10 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
             {
                 
                 let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-                popOverVC.modalPresentationStyle = .popover
+                if UIDevice.current.userInterfaceIdiom != .pad
+                {
+                    popOverVC.modalPresentationStyle = .popover
+                }
                 popOverVC.showOnlySingleButton  = true
                 popOverVC.strMessage = "You cannot add more than full count, please check your score once."
                 CurrentPopUpMessage = "You cannot add more than full count, please check your score once."
@@ -420,7 +426,10 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
                 print("Show pop up for losting selected cards")
                 
                 let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-                popOverVC.modalPresentationStyle = .popover
+                if UIDevice.current.userInterfaceIdiom != .pad
+                {
+                    popOverVC.modalPresentationStyle = .popover
+                }
                 popOverVC.showOnlySingleButton = false
                 popOverVC.strMessage = "Selected cards will be removed from your count,do you want to continue?"
                 popOverVC.onNOClicked = {(noClickedStr) ->() in
@@ -602,7 +611,10 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
                     print("Score board saved")
                     
                     let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-                    popOverVC.modalPresentationStyle = .popover
+                    if UIDevice.current.userInterfaceIdiom != .pad
+                    {
+                        popOverVC.modalPresentationStyle = .popover
+                    }
                     popOverVC.showOnlySingleButton  = true
                     popOverVC.strMessage = "Score added successfully"
                    // popOverVC.delegate = self

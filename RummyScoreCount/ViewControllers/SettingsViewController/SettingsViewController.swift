@@ -48,7 +48,10 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func ShowSuccessPopup() -> Void
     {
         let popOverVC = UIStoryboard(name: "PopUp", bundle: nil).instantiateViewController(withIdentifier: "AlertPopViewController") as! AlertPopViewController
-        popOverVC.modalPresentationStyle = .popover
+        if UIDevice.current.userInterfaceIdiom != .pad
+        {
+            popOverVC.modalPresentationStyle = .popover
+        }
         popOverVC.showOnlySingleButton  = true
         popOverVC.strMessage = "Updated Successfully"
        // popOverVC.delegate = self

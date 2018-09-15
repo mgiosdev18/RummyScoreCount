@@ -125,7 +125,7 @@ extension UINavigationController {
 
 extension Notification.Name
 {
-    static let  btnNOClicked = Notification.Name(rawValue: "btnNOClicked")
+    static let  refreshView = Notification.Name(rawValue: "refreshView")
     
     
 }
