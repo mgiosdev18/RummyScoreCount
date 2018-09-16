@@ -176,23 +176,48 @@ class ScoreBoardViewController: UIViewController,UITableViewDataSource,UITableVi
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
         
-        if cardsCount[indexPath.section] == 0
+        if UIDevice.current.userInterfaceIdiom == .pad
         {
-             return 120
-            
-        }
-        else if cardsCount[indexPath.section] > 0 && cardsCount[indexPath.section] <= 6
-        {
-             return 120
-        }
-        else if cardsCount[indexPath.section] > 6
-        {
-             return 175
+            if cardsCount[indexPath.section] == 0
+            {
+                return 250
+                
+            }
+            else if cardsCount[indexPath.section] > 0 && cardsCount[indexPath.section] <= 6
+            {
+                return 250
+            }
+            else if cardsCount[indexPath.section] > 6
+            {
+                return 450
+            }
+            else
+            {
+                return 250
+            }
         }
         else
         {
-            return 120
+            if cardsCount[indexPath.section] == 0
+            {
+                return 120
+                
+            }
+            else if cardsCount[indexPath.section] > 0 && cardsCount[indexPath.section] <= 6
+            {
+                return 120
+            }
+            else if cardsCount[indexPath.section] > 6
+            {
+                return 175
+            }
+            else
+            {
+                return 120
+            }
         }
+        
+     
         
         
         /*

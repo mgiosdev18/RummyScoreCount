@@ -139,23 +139,46 @@ class CompletedGamesViewController: UIViewController, UITableViewDelegate,UITabl
     {
         let imagesCount = allPlayerimagesArray[indexPath.section].count
         
-        
-        if imagesCount >= 1 && imagesCount <= 3
+        if UIDevice.current.userInterfaceIdiom == .pad
         {
-             return 100.0;
-        }
-        else if imagesCount > 3 && imagesCount <= 6
-        {
-             return 200.0;
-        }
-        else if imagesCount > 6
-        {
-             return 200.0
+            if imagesCount >= 1 && imagesCount <= 3
+            {
+                return 300.0;
+            }
+            else if imagesCount > 3 && imagesCount <= 6
+            {
+                return 500.0;
+            }
+            else if imagesCount > 6
+            {
+                return 500.0
+            }
+            else
+            {
+                return 300.0
+            }
         }
         else
         {
-            return 100.0
+            if imagesCount >= 1 && imagesCount <= 3
+            {
+                return 100.0;
+            }
+            else if imagesCount > 3 && imagesCount <= 6
+            {
+                return 200.0;
+            }
+            else if imagesCount > 6
+            {
+                return 200.0
+            }
+            else
+            {
+                return 100.0
+            }
         }
+        
+     
         
        
     }
@@ -172,7 +195,7 @@ class CompletedGamesViewController: UIViewController, UITableViewDelegate,UITabl
         let label = UILabel(frame: CGRect(x:10, y:5, width:tableView.frame.size.width, height:20))
         label.font = UIFont.boldSystemFont(ofSize: 20)
       //  label.text = list.objectAtIndex(indexPath.row) as! String
-        label.text = "Show game date"
+        label.text = ""
         label.textColor = UIColor.white
         view.addSubview(label)
         view.backgroundColor = UIColor.clear // Set your background color

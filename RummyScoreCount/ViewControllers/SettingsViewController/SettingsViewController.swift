@@ -23,8 +23,8 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var strMidDropPoints = "40"
     var strFullCountPoints = "80"
     
-    let arrTitles = ["Enter the total game points :","Enter the Drop points :","Enter the Mid.Drop points :","Enter the full count points :"]
-    let arrFiledDefaultTexts = ["201 (Default)","20 (Default)","40 (Default)","80 (Default)"]
+    let arrTitles = ["Enter the total game points :","Enter the Drop points :","Enter the Mid.Drop points :","Enter the full count points :","Version :"]
+    let arrFiledDefaultTexts = ["201 (Default)","20 (Default)","40 (Default)","80 (Default)","1.0.0(5)"]
     var arrFiledTexts = Array<String>()
     
     override func viewDidLoad() {
@@ -135,6 +135,8 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     strFullCountPoints = ""
                 }
                 
+                arrFiledTexts.append("1.0.0(5)")
+                
             }
             
         } catch let error {
@@ -169,17 +171,19 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
         else
         {
-            if arrFiledTexts[indexPath.row].count == 0
+            if arrFiledTexts.indices.contains(indexPath.row)
             {
-                settingsCell.fieldGamePoints.placeholder = arrFiledDefaultTexts[indexPath.row]
-                settingsCell.fieldGamePoints.setValue(PlaceHolderColor, forKeyPath: "_placeholderLabel.textColor")
+                if arrFiledTexts[indexPath.row].count == 0
+                {
+                    settingsCell.fieldGamePoints.placeholder = arrFiledDefaultTexts[indexPath.row]
+                    settingsCell.fieldGamePoints.setValue(PlaceHolderColor, forKeyPath: "_placeholderLabel.textColor")
+                }
+                else
+                {
+                    settingsCell.fieldGamePoints.text = arrFiledTexts[indexPath.row]
+                }
             }
-            else
-            {
-                settingsCell.fieldGamePoints.text = arrFiledTexts[indexPath.row]
-            }
-            
-            
+
         }
         
         settingsCell.fieldGamePoints.tag = indexPath.row
@@ -288,6 +292,9 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         case 3:
             strFullCountPoints = textField.text!
             break
+        case 4:
+            textField.isUserInteractionEnabled = false
+            break
         default:
             break
         }
@@ -311,6 +318,10 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         case 3:
             strFullCountPoints = textField.text!
             break
+        case 4:
+            textField.isUserInteractionEnabled = false
+            break
+            
         default:
             break
         }
