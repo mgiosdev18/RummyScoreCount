@@ -113,10 +113,14 @@ class NewPlayerPopUp: UIViewController,UINavigationControllerDelegate,UIImagePic
                     segmentedMaleFemale.selectedSegmentIndex = 0
                     strMaleFemale = "Male"
                 }
-                else
+                else if player.gender == "Female"
                 {
                     segmentedMaleFemale.selectedSegmentIndex = 1
                     strMaleFemale = "Female"
+                }
+                else
+                {
+                    segmentedMaleFemale.selectedSegmentIndex = UISegmentedControlNoSegment
                 }
             }
             
@@ -510,24 +514,16 @@ class NewPlayerPopUp: UIViewController,UINavigationControllerDelegate,UIImagePic
         strPlayerName = fieldPlayerName.text!
         strYOB = fieldYOB.text!
         
-        if strMaleFemale != "" && strPlayerName != ""
+        if strPlayerName != ""
         {
             message = "Success"
             return (true,message)
         }
         else
         {
-            if strMaleFemale == ""
-            {
-                message = "Please select gender"
+            
+            message = "Please enter player name"
                 
-            }
-            else
-            {
-                message = "Please enter player name"
-            }
-            
-            
             return (false,message)
         }
     }

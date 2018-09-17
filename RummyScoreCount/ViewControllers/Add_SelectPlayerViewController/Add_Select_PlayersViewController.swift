@@ -229,6 +229,10 @@ class Add_Select_PlayersViewController: UIViewController,UICollectionViewDelegat
         {
             Cell.lblGender.text = "F"
         }
+        else
+        {
+            Cell.lblGender.text = ""
+        }
         
         Cell.lblPlayerName.text = player.name!.uppercased()
         Cell.lblPlayerName.textColor = UIColor.getCustomBlueColor()
@@ -491,11 +495,16 @@ class Add_Select_PlayersViewController: UIViewController,UICollectionViewDelegat
                     let filterArrCompletedIds = tempCompletedIDArr?.filter {$0 != playerID}
                     value.compltedPlayerIDs = filterArrCompletedIds?.joined(separator: ",")
                     
-                    let classPlayersDictArr = value.scoreBoard as! [classPlayersDict]
+                    if value.scoreBoard != nil
+                    {
+                        let classPlayersDictArr = value.scoreBoard as! [classPlayersDict]
+                        
+                        let fileterArr = classPlayersDictArr.filter {$0.id != playerID}
+                        
+                        value.scoreBoard = fileterArr as NSObject
+                    }
                     
-                    let fileterArr = classPlayersDictArr.filter {$0.id != playerID}
-       
-                    value.scoreBoard = fileterArr as NSObject
+                   
                     
                     do {
                         try managedContext?.save()

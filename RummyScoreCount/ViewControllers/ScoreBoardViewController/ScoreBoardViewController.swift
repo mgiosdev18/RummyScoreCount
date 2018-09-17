@@ -38,21 +38,30 @@ class ScoreBoardViewController: UIViewController,UITableViewDataSource,UITableVi
         playerScoreboardArr.removeAll()
         let gameDetails = self.getScoreBoardOf(gameID: gameID)
         
-        let scoreboardArr = gameDetails.scoreBoard as! [classPlayersDict]
-        
-        let getPlayerScoreDict = scoreboardArr.filter {$0.id == playerID}
-        
-        playerScoreboardArr =  getPlayerScoreDict[0].scoreDictArray!
-        var GrandTotal = 0
-        
-        
-        for scoreDict in playerScoreboardArr
+        if gameDetails.scoreBoard != nil
         {
-            GrandTotal +=  Int(scoreDict.score!)!
+            let scoreboardArr = gameDetails.scoreBoard as! [classPlayersDict]
             
+            let getPlayerScoreDict = scoreboardArr.filter {$0.id == playerID}
+            
+            if getPlayerScoreDict.count != 0
+            {
+            
+                playerScoreboardArr =  getPlayerScoreDict[0].scoreDictArray!
+                var GrandTotal = 0
+                
+                
+                for scoreDict in playerScoreboardArr
+                {
+                    GrandTotal +=  Int(scoreDict.score!)!
+                    
+                }
+                
+                lblGrandTotal.text = "Your Total Score : \(String(describing:GrandTotal))"
+            }
         }
         
-        lblGrandTotal.text = "Your Total Score : \(String(describing:GrandTotal))"
+       
         
         tblScoreBoard.reloadData()
         

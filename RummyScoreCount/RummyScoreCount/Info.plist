@@ -17,19 +17,19 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
-	<string>5</string>
+	<string>6</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>RummyScoreCount will use your media to take pictures</string>
+	<string>RummyScoreCount will use your Media Library to select and will show your picture in score board</string>
 	<key>NSCameraUsageDescription</key>
-	<string>RummyScoreCount will use your media to take pictures</string>
+	<string>RummyScoreCount will use your Camera to take your picture and later identify easily by you</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>RummyScoreCount will use your media to take pictures</string>
+	<string>RummyScoreCount will use your Photo Library to select picures of you to identify youself easily in game</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>RummyScoreCount will use your media to take pictures</string>
+	<string>RummyScoreCount will use your Photo Library to select picures of you to identify youself easily in game</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
