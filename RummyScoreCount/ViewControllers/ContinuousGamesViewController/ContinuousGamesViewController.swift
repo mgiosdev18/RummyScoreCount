@@ -44,7 +44,7 @@ class ContinuousGamesViewController: UIViewController,UITableViewDelegate,UITabl
         allPlayerimagesArray.removeAll()
         allPlayerNamesArray.removeAll()
         
-        let continueGamesArray = self.getCompletedGamesList()
+        let continueGamesArray = self.getContinuesGamesList()
         
         
         if continueGamesArray.count == 0
@@ -55,36 +55,22 @@ class ContinuousGamesViewController: UIViewController,UITableViewDelegate,UITabl
         else
         {
             emptyLabel.isHidden = true
+            
             for continueGame in continueGamesArray {
                 
-                gameIDsArray.append(continueGame.gameID!)
                 
                 var playerImagesArr = [Data]()
                 var playerNamesArr = [String]()
                 
                 let playersArray = continueGame.player?.allObjects as! [Players]
                 
-                let runningPlayerIDsArr = continueGame.runnigPlayerIDs?.components(separatedBy: ",")
-                
-                for playerID in runningPlayerIDsArr!
+                if playersArray.count > 1
                 {
-                    let playerFilterArray = playersArray.filter{$0.id == playerID}
+                    gameIDsArray.append(continueGame.gameID!)
+
+                    let runningPlayerIDsArr = continueGame.runnigPlayerIDs?.components(separatedBy: ",")
                     
-                    if playerFilterArray.count != 0
-                    {
-                        playerImagesArr.append(playerFilterArray[0].avatar!)
-                        playerNamesArr.append(playerFilterArray[0].name!)
-                    }
-                    
-                  
-                    
-                }
-                
-                if continueGame.compltedPlayerIDs != nil
-                {
-                    let completedPlayerIDsArr = continueGame.compltedPlayerIDs?.components(separatedBy: ",")
-                    
-                    for playerID in completedPlayerIDsArr!
+                    for playerID in runningPlayerIDsArr!
                     {
                         let playerFilterArray = playersArray.filter{$0.id == playerID}
                         
@@ -94,12 +80,37 @@ class ContinuousGamesViewController: UIViewController,UITableViewDelegate,UITabl
                             playerNamesArr.append(playerFilterArray[0].name!)
                         }
                         
+                        
+                        
                     }
+                    
+                    if continueGame.compltedPlayerIDs != nil
+                    {
+                        let completedPlayerIDsArr = continueGame.compltedPlayerIDs?.components(separatedBy: ",")
+                        
+                        for playerID in completedPlayerIDsArr!
+                        {
+                            let playerFilterArray = playersArray.filter{$0.id == playerID}
+                            
+                            if playerFilterArray.count != 0
+                            {
+                                playerImagesArr.append(playerFilterArray[0].avatar!)
+                                playerNamesArr.append(playerFilterArray[0].name!)
+                            }
+                            
+                        }
+                    }
+                    
+                    allPlayerimagesArray.append(playerImagesArr)
+                    allPlayerNamesArray.append(playerNamesArr)
                 }
-                
-                allPlayerimagesArray.append(playerImagesArr)
-                allPlayerNamesArray.append(playerNamesArr)
-                
+                else
+                {
+                    //delete the game...
+                    self.DelelteGame(withID:continueGame.gameID!)
+ 
+                }
+  
             }
             
         }
@@ -143,10 +154,10 @@ class ContinuousGamesViewController: UIViewController,UITableViewDelegate,UITabl
         
     }
     
-    func getCompletedGamesList() -> [NewGame]
+    func getContinuesGamesList() -> [NewGame]
     {
         
-        var CompletedGamesArray = [NewGame]()
+        var ContinuesGamesArray = [NewGame]()
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
@@ -169,7 +180,7 @@ class ContinuousGamesViewController: UIViewController,UITableViewDelegate,UITabl
             
             if results?.count != 0
             {
-                CompletedGamesArray = results!
+                ContinuesGamesArray = results!
                 
                 
                 do {
@@ -186,7 +197,51 @@ class ContinuousGamesViewController: UIViewController,UITableViewDelegate,UITabl
             print(error.localizedDescription)
         }
         
-        return CompletedGamesArray
+        return ContinuesGamesArray
+    }
+    
+    func DelelteGame(withID:String) -> Void
+    {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        let managedContext = appDelegate?.persistentContainer.viewContext
+        
+        let request: NSFetchRequest<NewGame>
+        if #available(iOS 10.0, OSX 10.12, *) {
+            request = NewGame.fetchRequest()
+            let predicate = NSPredicate(format: "gameID == %@", withID)
+            request.predicate = predicate
+            
+        } else {
+            request = NSFetchRequest(entityName: "NewGame")
+            let predicate = NSPredicate(format: "gameID == %@", withID)
+            request.predicate = predicate
+        }
+        do {
+            
+            let results = try managedContext?.fetch(request)
+            
+            if results?.count != 0
+            {
+                
+                managedContext?.delete((results?[0])!)
+                
+                
+                do {
+                    try managedContext?.save()
+                    
+                } catch let error as NSError {
+                    print("Count't save..\(error.description)")
+                    
+                }
+                
+            }
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
     }
     
     @objc func btnContinueClicked(sender:UIButton) -> Void

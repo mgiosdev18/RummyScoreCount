@@ -26,9 +26,9 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
     let numberOfCellsInRow: CGFloat = 4
     let arrCardsImages = [#imageLiteral(resourceName: "letter-a"),#imageLiteral(resourceName: "letter-j"),#imageLiteral(resourceName: "letter-q"),#imageLiteral(resourceName: "letter-k"),#imageLiteral(resourceName: "two"),#imageLiteral(resourceName: "three"),#imageLiteral(resourceName: "four"),#imageLiteral(resourceName: "five"),#imageLiteral(resourceName: "six"),#imageLiteral(resourceName: "seven"),#imageLiteral(resourceName: "eight"),#imageLiteral(resourceName: "nine"),#imageLiteral(resourceName: "ten")]
     var arrcardsCount = [0,0,0,0,0,0,0,0,0,0,0,0,0]
-    var totalCardCount = 0
+    var totalCardCount = -1
     var arrNumberOfCardsCount = [0,0,0,0,0,0,0,0,0,0,0,0,0]
-    var systemCount = 0
+    var systemCount = -1
     var isSelectedSystemCount = false
     var isHalfCount = false
     
@@ -51,7 +51,8 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
         // Do any additional setup after loading the view.
         lblselectCardMessage.text = "OR\nselect cards to get your score. No need to select Wild/Paper jocker."
         cardsCollectionView.backgroundColor = .clear
-        CommonObjectClass().EnableButtons(buttons: [btnDone], withBackgroundColor: UIColor.getCustomBlueColor())
+       // CommonObjectClass().EnableButtons(buttons: [btnDone], withBackgroundColor: UIColor.getCustomBlueColor())
+        CommonObjectClass().DisableButtons(buttons: [btnDone], withBackgroundColor: .clear)
         self.segmentedAppearance()
         self.updateTotalPointsLable()
         
@@ -72,6 +73,8 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
     
     @IBAction func segmentButtonsClicked(_ sender: UISegmentedControl)
     {
+        CommonObjectClass().EnableButtons(buttons: [btnDone], withBackgroundColor: UIColor.getCustomBlueColor())
+        
         isSelectedSystemCount = true
         
         self.btnCheckBox.isEnabled = false
@@ -147,6 +150,7 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
     
     @IBAction func btnDoneClicked(_ sender: UIButton)
     {
+        
         
         let currentGameData = self.getScoreBoardOf(gameID: "\(gameID)")
         
@@ -229,45 +233,19 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
                     {
                         arrTotalRoundsDict.append(playerDictArr)
                     }
-                    
-              
-                    
+   
                 }
-                
-                
-            
-                
+ 
                 self.addScoresOf(gameID: "\(gameID)", PlayerID: playerID, withScores:arrTotalRoundsDict)
-                
-                
-                
+  
             }
-            
-     
-            /*
-            for playerDict in scoresArray
-            {
-                if playerDict.id == playerID
-                {
-                    arrPlayerScores.append(playerDict)
-                    
-                    var scoresarray = playerDict.scoreDictArray
-                    
-                    scoresarray?.append(newScoreDict!)
-                    
-                }
-            }
-            */
             
             
         }
-        
-
-        
+  
     }
     
-    
-    
+
     //MARK: - UICollectionView Delegate methods
     //MARK: -
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -385,6 +363,15 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
                 
             }
             
+            if totalCardCount > 0
+            {
+                CommonObjectClass().EnableButtons(buttons: [btnDone], withBackgroundColor: UIColor.getCustomBlueColor())
+            }
+            else
+            {
+                CommonObjectClass().DisableButtons(buttons: [btnDone], withBackgroundColor: .clear)
+            }
+            
         }
         
   
@@ -398,6 +385,16 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
             arrcardsCount[sender.tag] = arrcardsCount[sender.tag] - 1
             self.updateTotalPointsLable()
             cardsCollectionView.reloadData()
+            
+        }
+        
+        if totalCardCount > 0
+        {
+            CommonObjectClass().EnableButtons(buttons: [btnDone], withBackgroundColor: UIColor.getCustomBlueColor())
+        }
+        else
+        {
+            CommonObjectClass().DisableButtons(buttons: [btnDone], withBackgroundColor: .clear)
         }
         
     }
@@ -409,8 +406,20 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
     {
         segmentView.tintColor = UIColor.getCustomBlueColor()
         segmentView.setTitleTextAttributes([NSAttributedStringKey.foregroundColor:UIColor.white], for: .selected)
-        segmentView.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 18)], for: .normal)
+        segmentView.setTitleTextAttributes([NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 15)], for: .normal)
         segmentView.selectedSegmentIndex = UISegmentedControlNoSegment
+        
+//        for segmentItem : UIView in segmentView.subviews
+//        {
+//            for item : Any in segmentItem.subviews {
+//                if let i = item as? UILabel {
+//                    i.numberOfLines = 0
+//                    i.minimumScaleFactor = 0.5
+//                    // change other parameters: color, font, height ...
+//                }
+//            }
+//        }
+
     }
     
     func updateTotalPointsLable() -> Void
@@ -459,7 +468,7 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
                     self.totalCardCount = self.systemCount
                     
                     self.cardsCollectionView.reloadData()
-                    self.lblHeading.text = "Ganesh, Your total points for this round is :"
+                    self.lblHeading.text = "Your total points for this round is :"
                     
                     
                     if self.totalCardCount > Int(self.gameTotal)!
@@ -507,7 +516,6 @@ class AddScoreViewController: UIViewController,UICollectionViewDelegate,UICollec
             totalCardCount = arrNumberOfCardsCount.reduce(0, +)
         }
         
-       // print("totalCardCount :\(totalCardCount)")
         
         self.lblHeading.text = "Your total points for this round is :"
         if totalCardCount > Int(gameTotal)!

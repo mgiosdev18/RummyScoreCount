@@ -43,42 +43,50 @@ class CompletedGamesViewController: UIViewController, UITableViewDelegate,UITabl
                 var playerImagesArr = [Data]()
                 var playerNamesArr = [String]()
                 
-                allGameIDsArray.append(completedGame.gameID!)
+                
                 
                 let playersArray = completedGame.player?.allObjects as! [Players]
                 
-                let runningPlayerIDsArr = completedGame.runnigPlayerIDs?.components(separatedBy: ",")
-                
-                for playerID in runningPlayerIDsArr!
+                if playersArray.count > 1
                 {
-                    let playerFilterArray = playersArray.filter{$0.id == playerID}
+                    allGameIDsArray.append(completedGame.gameID!)
+                    let runningPlayerIDsArr = completedGame.runnigPlayerIDs?.components(separatedBy: ",")
                     
-                    if playerFilterArray.count != 0
+                    for playerID in runningPlayerIDsArr!
                     {
-                        playerImagesArr.append(playerFilterArray[0].avatar!)
-                        playerNamesArr.append(playerFilterArray[0].name!)
+                        let playerFilterArray = playersArray.filter{$0.id == playerID}
+                        
+                        if playerFilterArray.count != 0
+                        {
+                            playerImagesArr.append(playerFilterArray[0].avatar!)
+                            playerNamesArr.append(playerFilterArray[0].name!)
+                        }
+                        
                     }
                     
-                }
-                
-                let completedPlayerIDsArr = completedGame.compltedPlayerIDs?.components(separatedBy: ",")
-                
-                for playerID in completedPlayerIDsArr!
-                {
-                    let playerFilterArray = playersArray.filter{$0.id == playerID}
+                    let completedPlayerIDsArr = completedGame.compltedPlayerIDs?.components(separatedBy: ",")
                     
-                    if playerFilterArray.count != 0
+                    for playerID in completedPlayerIDsArr!
                     {
-                        playerImagesArr.append(playerFilterArray[0].avatar!)
-                        playerNamesArr.append(playerFilterArray[0].name!)
+                        let playerFilterArray = playersArray.filter{$0.id == playerID}
+                        
+                        if playerFilterArray.count != 0
+                        {
+                            playerImagesArr.append(playerFilterArray[0].avatar!)
+                            playerNamesArr.append(playerFilterArray[0].name!)
+                        }
+                        
+                        
                     }
-
                     
+                    allPlayerimagesArray.append(playerImagesArr)
+                    allPlayerNamesArray.append(playerNamesArr)
                 }
-                
-                allPlayerimagesArray.append(playerImagesArr)
-                allPlayerNamesArray.append(playerNamesArr)
-                
+                else
+                {
+                    DelelteGame(withID: completedGame.gameID!)
+                }
+        
             }
         }
  
@@ -270,6 +278,50 @@ class CompletedGamesViewController: UIViewController, UITableViewDelegate,UITabl
         }
         
         return CompletedGamesArray
+    }
+    
+    func DelelteGame(withID:String) -> Void
+    {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        let managedContext = appDelegate?.persistentContainer.viewContext
+        
+        let request: NSFetchRequest<NewGame>
+        if #available(iOS 10.0, OSX 10.12, *) {
+            request = NewGame.fetchRequest()
+            let predicate = NSPredicate(format: "gameID == %@", withID)
+            request.predicate = predicate
+            
+        } else {
+            request = NSFetchRequest(entityName: "NewGame")
+            let predicate = NSPredicate(format: "gameID == %@", withID)
+            request.predicate = predicate
+        }
+        do {
+            
+            let results = try managedContext?.fetch(request)
+            
+            if results?.count != 0
+            {
+                
+                managedContext?.delete((results?[0])!)
+                
+                
+                do {
+                    try managedContext?.save()
+                    
+                } catch let error as NSError {
+                    print("Count't save..\(error.description)")
+                    
+                }
+                
+            }
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
     }
     
     

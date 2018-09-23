@@ -24,7 +24,7 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var strFullCountPoints = "80"
     
     let arrTitles = ["Enter the total game points :","Enter the Drop points :","Enter the Mid.Drop points :","Enter the full count points :","Version :"]
-    let arrFiledDefaultTexts = ["201 (Default)","20 (Default)","40 (Default)","80 (Default)","1.0.0(5)"]
+    let arrFiledDefaultTexts = ["201 (Default)","20 (Default)","40 (Default)","80 (Default)",UIApplication.shared.versionAndBuild()]
     var arrFiledTexts = Array<String>()
     
     override func viewDidLoad() {
@@ -135,7 +135,7 @@ class SettingsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     strFullCountPoints = ""
                 }
                 
-                arrFiledTexts.append("1.0.0(5)")
+                arrFiledTexts.append(UIApplication.shared.versionAndBuild())
                 
             }
             

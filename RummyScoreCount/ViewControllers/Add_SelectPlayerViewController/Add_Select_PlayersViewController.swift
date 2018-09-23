@@ -31,6 +31,7 @@ class Add_Select_PlayersViewController: UIViewController,UICollectionViewDelegat
     @IBOutlet weak var btnAddPlayer: UIBarButtonItem!
     @IBOutlet weak var btnBack: UIBarButtonItem!
     @IBOutlet weak var playerCollectionView: UICollectionView!
+    @IBOutlet weak var lblHeading: UILabel!
     
     var arrAllPlayers = Array<PlayersModel>()
     var arrSelectedPlayerIDs = Array<String>()
@@ -51,10 +52,12 @@ class Add_Select_PlayersViewController: UIViewController,UICollectionViewDelegat
         CommonObjectClass().EnableButtons(buttons: [btnStartNewGame], withBackgroundColor: .getCustomBlueColor())
         playerCollectionView.backgroundColor = .clear
         
+        // For ipad
         observer = NotificationCenter.default.addObserver(forName: .refreshView, object: nil, queue: OperationQueue.main, using: { (notificaiton) in
             print("iPad observer clicked")
             self.arrSelectedPlayerIDs.removeAll()
             self.getAllPlayers()
+            
             
         })
  
@@ -68,6 +71,17 @@ class Add_Select_PlayersViewController: UIViewController,UICollectionViewDelegat
         arrSelectedPlayerIDs.removeAll()
         self.getAllPlayers()
         
+        if arrAllPlayers.count < 2
+        {
+            CommonObjectClass().DisableButtons(buttons: [btnStartNewGame], withBackgroundColor: .clear)
+            
+            lblHeading.isHidden = true
+        }
+        else
+        {
+            CommonObjectClass().EnableButtons(buttons: [btnStartNewGame], withBackgroundColor: .getCustomBlueColor())
+            lblHeading.isHidden = false
+        }
         let lpgr : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
         lpgr.minimumPressDuration = 0.5
         lpgr.delegate = self

@@ -226,6 +226,26 @@ extension String {
     }
 }
 
+extension UIApplication {
+    
+    func applicationVersion() -> String {
+        
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+    }
+    
+    func applicationBuild() -> String {
+        
+        return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
+    }
+    
+    func versionAndBuild() -> String {
+        
+        let version = self.applicationVersion()
+        let build = self.applicationBuild()
+        
+        return "\(version)(\(build))"
+    }
+}
 
 
 

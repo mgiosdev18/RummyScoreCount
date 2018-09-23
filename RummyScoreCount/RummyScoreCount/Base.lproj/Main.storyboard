@@ -237,6 +237,7 @@
                         <outlet property="btnAddPlayer" destination="CdP-0f-0QN" id="js0-7u-rbH"/>
                         <outlet property="btnBack" destination="uoO-ml-kXG" id="vSp-Fp-SUn"/>
                         <outlet property="btnStartNewGame" destination="wi3-AR-npk" id="tp0-wb-H0h"/>
+                        <outlet property="lblHeading" destination="Sju-2L-ShF" id="v8U-fQ-egB"/>
                         <outlet property="playerCollectionView" destination="rOl-F8-x03" id="bDg-MY-qM4"/>
                         <segue destination="kkx-Y4-UaK" kind="popoverPresentation" identifier="popupSB" popoverAnchorBarButtonItem="CdP-0f-0QN" id="0SG-k0-R1B">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -299,7 +300,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z7y-Kd-clH">
-                                                    <rect key="frame" x="574" y="11" width="147" height="98"/>
+                                                    <rect key="frame" x="259.5" y="11" width="68.5" height="98"/>
                                                     <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                     <state key="normal" title="View Scores"/>
@@ -308,7 +309,7 @@
                                                     </variation>
                                                 </button>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8Br-wr-NGP">
-                                                    <rect key="frame" x="11" y="11" width="555.5" height="98"/>
+                                                    <rect key="frame" x="11" y="11" width="241" height="98"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Skk-Nn-aIr">
                                                         <size key="itemSize" width="50" height="50"/>
@@ -433,7 +434,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQO-gO-2Z9">
-                                                    <rect key="frame" x="574" y="11" width="147" height="98"/>
+                                                    <rect key="frame" x="259.5" y="11" width="68.5" height="98"/>
                                                     <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                     <state key="normal" title="Continue"/>
@@ -442,7 +443,7 @@
                                                     </variation>
                                                 </button>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Gjd-0M-BxV">
-                                                    <rect key="frame" x="11" y="11" width="555.5" height="98"/>
+                                                    <rect key="frame" x="11" y="11" width="241" height="98"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="C4L-z5-c6e">
                                                         <size key="itemSize" width="50" height="50"/>
@@ -850,7 +851,7 @@
         <image name="navBack" width="35" height="35"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kZb-kx-G99"/>
+        <segue reference="OvA-Ls-vDv"/>
         <segue reference="hcW-Yd-0gy"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
